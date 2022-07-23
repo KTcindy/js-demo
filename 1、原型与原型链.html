@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1、原型是函数所特有的
+        //原型 prototype
+        function fn(){
+            console.log(this)
+        }
+        fn.prototype.name="张三"
+        fn()
+        //2、任何数据类型都是有原型链的
+        //_proto_
+        let obj={}
+
+        /** 1、从当前实例上找（需要找的）如果找到就返回 否则就往上一层一层找找 如果还是没有找到就会返回null*/
+        // 当我们想使用原型里面的方法 hasOwnPrototype或者其他方法 他的查找规则是 通过原型链一层一层找 只到会找到一个大的Object 这个object里面就有这些方法
+
+         
+    </script>
+</body>
+</html>

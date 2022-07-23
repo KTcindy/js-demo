@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // uglifyjs-webpack-plugin //webpack 优化打包工具
+        const UgilifyJsPlugin=require('uglifyjs-webpack-plugin'); //插件引入
+        let isProduction=process.env.NODE_ENV;//判断是否是生产环境 
+        module.exports={
+            lintOnSave:false,  //是否注释警告 eslint
+            devServer:{   //服务跨域配置
+                compress:false, //是否开启代码压缩
+                open:true,  //是否打开浏览器
+                proxy:{
+                    '/sys':{  //'sys' 接口前缀
+                        target:'xxxxxx', //代理的具体地址
+                        changeOrigin:true, //是否开启跨域
+                        ws:false,//websoket 是否开启
+                        pathRewite:{ //重写  列如：'/sys/sys' 重写后 '/sys/'
+                            'sys':'/'
+                        }
+                    }
+                },
+                hot:true //开启热更新
+            },
+            css:{
+                loaderOptions:{
+                    sass:{  //配置sass的全局样式
+                        prependDate:"@import '/xxx/xx/xx'" //地址
+                    }
+                }
+            },
+            configureWebpack:config=>{
+                // 生产环境相关配置
+                if(isProduction=='production'){
+                    // 代码压缩
+                    config.plugins.push(
+                        new UgilifyJsPlugin({
+                            ugilifyOptions:{
+                                //生产环境自动删除 console
+                                warnings:false,
+                                compress:{
+                                    //warnings:false, //若打包错误，则注释这行
+                                    drop_debugger:true, //是否关闭debugger
+                                    drop_console:true, //是否关闭console
+                                    pure_funcs:['console.log']
+                                }
+                            },
+                            sourceMap:false, //是否开启打印日志
+                            parallel:true //是否开启加速打包
+                        })
+                    )
+                }
+            }
+        }
+    </script>
+</body>
+</html>

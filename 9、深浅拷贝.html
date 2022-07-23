@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 解钩赋值 是浅拷贝  
+        // 例如：下述情况说明 针对一维数组和对象可以看做是深拷贝
+        let arr=[1,2,3,4,5]
+        let newArr=[...arr] //1,2,3,4,5
+        // 例如：下述情况说明  针对二维数组或多维数组及多维对象 就是浅拷贝
+        let arr1=[[1,2,3],[4,5,6]]
+        let newArr1=[...arr1]
+        newArr1[0].push(888)
+        console.log(arr1,newArr1) // 打印得到 分别是  arr1=> [[1,2,3,888],[4,5,6]]， newArr1=>[[1,2,3,888],[4,5,6]]
+        //深拷贝 最常用的JSON.parse(JSON.stringify(xxx)) 此方法只能满足百分之八十场景  而function用此方法转不了
+        // console.log({}.constructor === Object)
+
+
+        // 标准的深拷贝
+        function deepClone(source){
+            // 1、判断当前source的构造函数的原型指向的是 数组还是对象  并设初始值
+            let targetObj=source.constructor===Array?[]:{}
+            for(let key in source){
+                //判断source下面有没有key这个属性 
+                if(source.hasOwnProperty(key)){ 
+                    //判断是否引用数据类型
+                    if(source[key] && typeof source[key]==='object'){ 
+                        // 判断当前targetObj子集下的key 是否对象
+                        // 递归走此方法
+                        targetObj[key]=deepClone(source[key])
+                    } else{
+                        // 基本数据类型 直接赋值
+                         targetObj[key]=source[key]
+                    }
+                }
+            }
+            return targetObj
+        }
+
+    </script>
+</body>
+</html>

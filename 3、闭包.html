@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //  1、闭包就是函数嵌套函数 内部函数就是闭包  正常情况下函数执行完成，内部变量会消耗
+        //  2、闭包 ，在内部函数没有执行完成，外部函数变量不会被销毁 
+        // 闭包的意义是 
+        // 1、延长变量的生命周期
+        // 2、创建私有环境
+        // 例如：vue data为什么是一个函数 因为vue.data 内部使用了闭包 这个闭包起到保护作用（也就是私有环境）因为他们都拥有各自的私有属性和方法 ，而作用就是起到内部环境不被其他组件干扰或者污染
+        let  fn1=function(){
+            let num=0
+            function changBy(e){
+                num+=e
+            }
+            return {
+                add:function(){
+                    changBy(1)
+                },
+                reduce:function(){
+                    changBy(-1)
+                },
+                value:function(){
+                    return num
+                }
+            }
+        }
+        let sum1=fn1()
+        let sum2=fn1()
+        sum1.add()
+        sum1.add()
+        console.log(sum1.value()) //2 
+        sum2.add()
+        console.log(sum2.value()) //1
+        // 上述例子 说明了 
+        // 1、我们每次调用方法时 变量没有被销毁 所以sum1 等于2
+        // 2、当我们重新赋值给新的变量时（sum2） 会创建一个行栈内存空间 
+        // 这个足以证明为什么vue中为什么使用闭包的原因了 为的就是不污染当前实例环境 
+    </script>
+</body>
+</html>

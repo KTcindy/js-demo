@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .a{
+            display: flex;
+        }
+        .b{
+            flex-grow: 1;
+        }
+    </style>
+    <div class="flxe">
+        <div class=""></div>
+        <div class=""></div>
+        <div class=""></div>
+
+        
+            
+            
+    </div>
+    <script>
+        export default {
+          name: "Input",
+          props: {
+            value: [String, Number], // 值
+            placeholderTip: Boolean, // 输入框 placeholder提示
+            form: Boolean, // 是否使用form-item标签包裹
+            label: String, // 标签
+            prop: String, // 校验的prop
+            placeholder:String,//提示
+            span:Number,//span
+          },
+          methods: {
+            /**
+             * 输入框改变
+             * @param e
+             */
+            inputChange(e) {
+              let v = e.target.value
+              this.$emit("input", v)
+              this.$emit("change", v)
+            },
+            /**
+             * 渲染form-item节点
+             * @param child
+             * @returns {JSX.Element}
+             */
+            renderFormItem (child) {
+              const { label, prop} = this
+              return <a-form-model-item label={label} prop={prop}>
+                {child}
+              </a-form-model-item>
+            },
+            /**
+             * 渲染输入框组件
+             * @returns {JSX.Element}
+             */
+            renderInputDom(){
+              return <a-input attrs={this.$attrs}
+                             value={this.value}
+                             onChange={this.inputChange}
+              />
+            },
+          },
+          render (createElement, context) {
+            const { placeholderTip, form,span } = this
+            const hasSpan = typeof span === "number" && span>0 && span<24
+            const inputChild = placeholderTip ? <a-tooltip placement="topLeft" title={this.placeholder}>
+              { this.renderInputDom()}
+            </a-tooltip> : this.renderInputDom()
+            if(form){
+              return hasSpan ? <a-col span={span}>{this.renderFormItem(inputChild)}</a-col> : this.renderFormItem(inputChild)
+            }
+            return hasSpan ? <a-col span={span}>{inputChild}</a-col> : inputChild
+          }
+        }
+        </script>
+</body>
+</html>

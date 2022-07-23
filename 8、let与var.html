@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>let和 var</h1>
+    <script>
+        // var 1、声明提升=>先上车后买票
+        console.table(name) //打印是得到   我是var  这里的name属性 比较特殊 其他属性可能就是undefault 
+        var name="我是var"
+        var name1='大佬'
+        var name1='瘪三'
+        console.log(name1) //打印得到    瘪三
+        // let 1、如果我们用let 定义就报错
+        console.table(name) //打印是会  报错
+        let name="我是var"
+        let name1='大佬'
+        let name1='瘪三'
+        console.log(name1) //打印得是会  报错
+    </script>
+</body>
+</html>

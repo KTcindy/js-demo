@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ 
+   
+    <input type="text" />
+    <div id="touchmove"></div>
+    <script>
+        // 节流就是技能cd，cd结束才能启动。防抖就是防止你技能点多了，最后点的那次才生效
+        function demo(e){
+            console.log(e,'哈哈哈哈去')
+        }
+        // 1、防抖就是在一定时间内触发多个事件只执行最后一个，销毁前一个
+        let inp=document.querySelector('input')
+        inp.addEventListener('input',antiShake(demo,5000))
+        // 封装备一个防抖
+        function antiShake(fn,time){
+            // 1、定义一个定时器 初始为null
+            let timeOut=null
+            return args=>{
+                // console.log(args,'args')
+                if(timeOut)clearTimeout(timeOut)
+                timeOut=setTimeout(fn,time,args)
+            }
+        }
+        
+
+        //2、节流 就是保证一段时间内 只能调用函数一次
+        let inp1=document.querySelector('#touchmove')
+        inp1.addEventListener('touchmove',antiShake1(demo,5000))
+        function antiShake1(fn,time){
+            let timeOut=null
+            return function (args){
+                if(!timeOut){
+                    timeOut=setTimeout(()=>{
+                        fn(args)
+                        timeOut=null
+                    },time)
+                }
+            }
+        }
+
+    </script>
+</body>
+<style>
+    #touchmove{
+        width: 300px;
+        height: 300px;
+        background-color: pink;
+    }
+</style>
+</html>

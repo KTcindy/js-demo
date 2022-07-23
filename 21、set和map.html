@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //  1、set、类似于数组 而里面的成员是唯一的 
+             const s=new Set();
+             s.add(1).add(2).add(3).add(3) //1、2、3
+            // 例如 数组去重
+            let arr1=[1,2,21,3,1,23,45,11,2,44,21];
+            let new2=[...new Set(arr1)];
+        // 2、Map 是以键值对形式添加
+        let m=new Map();
+        m.set('name','张三').set('age',12)
+        
+        console.log([m])
+    </script>
+   
+</body>
+</html>

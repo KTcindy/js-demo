@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class dom{
+            constructor(){
+                 this.containeer={}
+            }
+            addMethods(key,fn){
+                (this.containeer[key] || (this.containeer[key] = [])).push(fn)
+            }
+            // removeMethods(key,fn){
+            //     (this.containeer[key] || (this.containeer[key] = [])).push(key)
+            // }
+            addCallBack(){
+                let key=Array.prototype.shift.call(arguments)
+                let fns=this.containeer[key]
+                if(!fns || !fns.length){
+                    return
+                }
+                for(let i=0;i<fns.length;i++){
+                    fns[i].apply(this,arguments) 
+                }
+            }
+            // removeCallBack(){
+            //     let key=Array.prototype.shift.call(arguments)
+            //     let fns=this.containeer[key]
+            //     if(!fns || !fns.length){
+            //       return
+            //     }
+            //     for(let i=0;i<fns.length;i++){
+            //         fns[i].apply(this,arguments) 
+            //     }
+            // }
+        }
+        let domMethods=new dom()
+        domMethods.addMethods('张三',function(size){
+            console.log(size,'bbbb')
+        })
+        domMethods.addCallBack('张三',100)
+        // domMethods.removeMethods('张三',function(state){
+        //     console.log(state,'移除')
+        // })
+        // domMethods.removeCallBack('张三','操作成功')
+    </script>
+</body>
+</html>

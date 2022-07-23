@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- proxy  Proxy主要用于改变对象的默认访问行为，实际上是在访问对象之前添加了一层拦截，在任何对对象的访问行为都会通过这层拦截，在这层拦截中，我们可以添加自定义行为-->
+    <!-- defineProperty 直接在对象上定义新属性，或修改对象上的现有属性，然后返回该对象 --> 
+    <!-- proxy和defineProperty 的区别 -->
+    <!-- 1、proxy 是对整个对象的进行代理拦截处理，而defineProperty 只能代理某个属性 -->
+    <!-- 2、Proxy 不兼容ie  defineProperty不兼容ie8以下 -->
+    <!-- 3、若对象内部属性要递归代理，Proxy可只在调用的时候递归，而defineProperty 需要一次完成所有递归，性能比Proxy差-->
+    <input type="text" id="username">
+    <p id="uname"></p>
+    <script>
+            //   v-model 原理
+        let obj={}
+        Object.defineProperty(obj,'username',{
+            get:function(val){
+                console.log(val,'--')
+                return val
+            },
+            set:function(val){
+                document.getElementById('uname').innerText=val
+            }
+        })
+        document.getElementById('username').addEventListener('keyup',function(e){
+            obj.username=e.target.value
+        })
+
+        // 1、虚拟dom是什么？
+            // 1、将真实dom 转化成虚拟dom 
+            //2、更新的时候做对比
+        //2、虚拟dom是如何提升vue的渲染效率？
+            //1、将直接操作dom的地方拿到两个js对象之中去做比较
+
+        //3、diff算法中的 parch 方法
+        // vue的渲染有两条线   1、初始化 2、更新
+        // 1、初始化 patch(container,vnode)
+        function createElement(vnode){
+            let tag=vnode.tag //目标元素
+            let attrs=vnode.attrs || {} //元素的属性
+            let children=vnode.children || {}  //子元素
+            if(!tag) return null
+            //1、创建对应的元素
+            let elem=document.createElement(tag)
+            let attrName
+            //2、给dom添加属性
+            for(attrName in attrs){
+                if(attrs.hasOwnProperty(attrs[attrName])){
+                    // 这是元素设置属性
+                    elem.setAttribute(attrName,attrs[attrName])
+                }
+            }
+            //3、将子元素添加到目标元素
+            children.forEach(function (childVnode) {
+                elem.appendChild(createElement(childVnode))
+            });
+            return elem
+        }
+        // 2、更新update(vnode,newVnode)
+        function updateChildren(vnode,newVnode){
+            let children=vnode.children || []  //现有结点
+            let newChildren=newVnode.children || [] //新节点
+            children.forEach((childrenVnode,index)=>{
+                // 1、循环的每一项
+                let newChildrenVnode=newChildren[index]
+                //第一层没有变化
+                if(childrenVnode.tag===newChildrenVnode.tag){
+                    //深层次对比 递归
+                    updateChildren(childrenVnode,newChildrenVnode)
+                }else{
+                    //两者不一样
+                    replaceNode(childrenVnode,newChildrenVnode)
+                }
+            })
+        }
+
+        // 2、单页面与多页面 的区别及优缺点
+    //    （1） 单页面应用（SPA）:只有一个主页面的应用
+            // 组件=> 页面片段
+            // 跳转=> 刷新局部资源
+            // 场景=> pc端
+            // 优点：a、体验好，加载快 b、改动内容，不用加载整个页面 c、前后端分离 d、效果可以很炫酷
+            //缺点：a、不利于SEO b、初次加载比较慢  c、页面复杂度高
+        // 多页面 ：整页刷新
+
+        //3、vue-Router 与 location.href 有什么区别？
+            // location.href : 简单方便，刷新页面
+            // Vue-router: 实现了按需加载，减少了dom消耗 //Vue-router：底层封装了原生的history
+    </script>
+</body>
+</html>

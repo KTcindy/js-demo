@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class MyPromise{
+            constructor(ctx){
+                ctx(this.resolve.bind(this),this.reject)
+            }
+            value=null
+            reason=null
+            state='PENDDING'
+            onResolveCallBack=[]
+            onRejectCallBack=[]
+            resolve(value){
+                if(this.state=='PENDDING'){
+                    this.value=value
+                    this.state='RESOLVED'
+                    while(this.onResolveCallBack.length){
+                        this.onResolveCallBack.shift()(value)
+                    }
+                }
+            }
+            reject(value){
+                if(this.state==='PENDDING'){
+                    this.value=value
+                    this.state='REJECTED'
+                    while(this.onRejectCallBack.length){
+                        this.onRejectCallBack.shift()(value)
+                    }
+                }
+            }
+            then(onResolveCallBack,onRejectCallBack){
+                if(this.state==='RESOLVED'){
+                    onResolveCallBack(this.value)
+                }
+                if(this.state==='REJECTED'){
+                    onRejectCallBack(this.reason)
+                }
+                if(this.state==='PENDDING'){
+                    this.onRejectCallBack.push(onRejectCallBack)
+                    this.onResolveCallBack.push(onResolveCallBack)
+
+                }
+            }
+        }
+        let myPromise1=new MyPromise((resolve,reject)=>{
+            setTimeout(()=>resolve(1),1000)
+        })
+        myPromise1.then(res=>{
+            // console.log(res,'-=')
+        })
+
+
+        // function a(fn){
+        //    function fn('1',fn2){
+
+        //     }
+        // }
+        function  my1(){
+            return new Promise((resolve,reject)=>{
+                resolve(1)
+            })
+        }
+        my1().then(res=>{
+            // return new Promise()
+        })
+    //  let {data} =async function aa(){
+    //         try{
+    //             await setTimeout(()=>{
+    //                 return res
+    //             },1500)
+    //         }catch(error){
+    //               throw new error('错误啦')
+    //         }
+           
+    //     }
+        
+    </script>
+</body>
+</html>
