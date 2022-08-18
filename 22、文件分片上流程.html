@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1、利用h5的fill对象,由于fill对象类型比较特殊他是一个blob， 分片上传的核心思想就是利用了blob的一个blob.slice方法进行切片的 然后利用了浏览器的多进程特性进行并发上传
+        2、上传切片前将文件的基本信息发送给后端进行验证 判断该文件是否需要上传
+        3、为分片的文件需要一个生成的id
+        4、循环分好片的文件数组循环待上传的文件队列
+        断点续传 是利用服务端返回已上传的切片列表，计算出已上传的文件大小，然后在待上传的文件列表中过滤掉已上传文件 并继续上传该文件
+    -->   
+</body>
+</html>
+
+

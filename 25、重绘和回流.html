@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1、回流必将引起重绘，重绘不一定会引起回流 -->
+    <!-- 会导致回流的一些操作 -->
+    <h1>页面首次渲染</h1>
+    <h1>浏览器窗口大小发生改变</h1>
+    <h1>元素内容发生改变</h1>
+    <h1>添加或者删除可见的dom</h1>
+    <!-- 会导致重绘的一些操作 -->
+    <h1>重绘就是不改变不影响元素在文档流的位置</h1>
+    <h1>文字颜色改变，背景颜色改变</h1>
+    <!-- 2、性能影响 -->
+    <h1>回流比重绘的代价要更高</h1>
+
+</body>
+</html>

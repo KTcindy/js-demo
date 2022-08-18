@@ -16,20 +16,32 @@
     <p id="uname"></p>
     <script>
             //   v-model 原理
-        let obj={}
-        Object.defineProperty(obj,'username',{
-            get:function(val){
-                console.log(val,'--')
-                return val
-            },
-            set:function(val){
-                document.getElementById('uname').innerText=val
-            }
-        })
+        // let obj={}
+        // Object.defineProperty(obj,'username',{
+        //     get:function(val){
+        //         return val
+        //     },
+        //     set:function(val){
+        //         document.getElementById('uname').innerText=val
+        //     }
+        // })
+        // document.getElementById('username').addEventListener('keyup',function(e){
+        //     obj.username=e.target.value
+        // })
+        var obj1={}
+        // var proxy = new Proxy(target, handler);
+        let proxy = new Proxy(obj1,{
+                get:function (target,key) {
+                    return target
+                },
+                set:function(target,key){
+                    document.getElementById('uname').innerText=target
+                 }
+            })
+            // console.log(proxy.username)
         document.getElementById('username').addEventListener('keyup',function(e){
-            obj.username=e.target.value
+            obj1.username=e.target.value
         })
-
         // 1、虚拟dom是什么？
             // 1、将真实dom 转化成虚拟dom 
             //2、更新的时候做对比

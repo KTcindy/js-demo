@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <script>
+    let ws=new WebSocket();
+    ws.onopen=()=>{ //用于指定连接成功后的回调
+        ws.send('Hello Server!');  //发送数据
+    }
+    ws.close=()=>{ 
+        console.log('用于指定连接关闭后的回调')
+    }
+    ws.onmessage=()=>{
+        console.log('用于收到指定服务器后的回调函数')
+    }
+    ws.onerror=()=>{
+        console.log('用于报错的回调')
+    }
+
+    //重连
+    // 1、事先定义好一个reconnect 函数和一个存状态的变量（这个状态的变量主要是为了避免重复连接）默认false
+    // 2、在此函数提前定义好一个定时器 假设是4秒
+    //2、执行重连函数会先去判断这个变量是否有连接 有则return 
+    //3、没有连接则改变状态的变量为true 
+    // 4、先清除定时器
+    // 5、执行webscoket的初始化方法
+    // 心跳
+    // 1、定义一个函数这个函数内面有四个变量 变量1，设置默认时长 变量2，是接收重连定时器的回调 变量3:接收断开连接的定时回调 变量4:执行心跳的主函数
+    // 2、此方法在 webscoket的连接成功的回调（opopen）和 收到返回服务器（onmessage）的回调时调用
+    //（1）、当我们执行心跳的主函数时会先清除变量2和变量3的定时器
+    //（2）、函数变量四中每隔几秒向后端一个数据正常情况下后端会返回相应的数据
+    //（3）、
+</script>
+</body>
+</html>
